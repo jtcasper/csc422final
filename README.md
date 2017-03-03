@@ -1,0 +1,1 @@
+Implementation of the algorithm discussed by [Blondel et al.](https://arxiv.org/abs/0803.0476) for community detection as part of the final project for NCSU's CSC422 Automated Learning and Data Analysis.
