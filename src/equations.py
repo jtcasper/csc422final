@@ -22,14 +22,11 @@ def computeModularity(network):
 
     sumResult = 0
     for node, values in network.items():
-        kNode = 0
-        nn = values[0].items()
-        for neighbor, weight in values[0].items():
-            kNode += weight
-            kNeighbor = 0
-            for neighborNeighbor, nnWeight in network[neighbor][0].items():
-                kNeighbor += nnWeight
-
+        neighbors = values[0]
+        kNode = sum(neighbors.values())
+        for neighbor, weight in neighbors.items():
+            neighborNodes = network[neighbor][0]
+            kNeighbor = sum(neighborNodes.values())
             sumResult += (weight - (kNode * kNeighbor) / (2*m)) * (1 if values[1] == network[neighbor][1] else 0)
 
     modularity = sumResult/(2*m)
