@@ -23,6 +23,17 @@ class Edge:
     def getNodes(self):
         return (self.getNode1(), self.getNode2())
 
+    def getOtherNode(self, node):
+        """
+        Gets the node that is not the passed in node
+        :param node: node that will be either node1 or node2
+        :return: Whichever node is not node
+        """
+        if node == self.getNode1():
+            return self.getNode2()
+        else:
+            return self.getNode1()
+
     def getWeight(self):
         return self.weight
 

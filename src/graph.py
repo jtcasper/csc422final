@@ -35,6 +35,16 @@ class Graph:
     def getEdges(self):
         return self.edges
 
+    def getTotalEdgeWeight(self):
+        """
+        Sums the weights of all edges in the graph
+        :return: m: the total edge weight
+        """
+        m = 0
+        for edge in self.getEdges():
+            m += edge.getWeight()
+        return m
+
     def addEdge(self, newEdge):
         self.edges.append(newEdge)
 

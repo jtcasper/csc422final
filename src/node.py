@@ -8,7 +8,7 @@ class Node:
         """
 
         self.ID = ID
-        # self.community = community
+        self.community = 0
         if connections is None:
             self.connections = []
 
@@ -26,11 +26,11 @@ class Node:
         if newConnection not in self.connections:
            self.connections.append(newConnection)
 
-    # def getCommunity(self):
-    #     return self.community
+    def getCommunity(self):
+        return self.community
 
-    # def setCommunity(self, newCommunity):
-    #     self.community = newCommunity
+    def setCommunity(self, newCommunity):
+        self.community = newCommunity
 
     def getDegree(self):
         """
@@ -39,6 +39,15 @@ class Node:
         """
         return len(self.connections)
 
+    def getNeighborCommunities(self):
+        list = []
+
+        for edge in self.getConnections():
+            otherNode = edge.getOtherNode(self)
+            list.append(otherNode.getCommunity())
+
+        return list
+
     def getSumEdgeWeights(self):
         """
         Computes the weight of all edges this node is a part of
@@ -46,8 +55,8 @@ class Node:
         """
         sum = 0
 
-        for arc in self.connections:
-            sum += arc.getWeight()
+        for edge in self.connections:
+            sum += edge.getWeight()
 
         return sum
 

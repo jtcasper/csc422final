@@ -22,12 +22,6 @@ def computeModularityDict(network):
         for neighbor, weight in neighbors.items():
             neighborNodes = network[neighbor][0]
             kNeighbor = sum(neighborNodes.values())
-            # print(str(kNeighbor) + ' ' + str(neighbor))
-            # print(weight)
-            # print(kNode)
-            # print(kNeighbor)
-            print(m)
-            # print((weight - (kNode * kNeighbor) / (2*m)) * (1 if values[1] == network[neighbor][1] else 0))
             sumResult += (weight - (kNode * kNeighbor) / (2*m)) * (1 if values[1] == network[neighbor][1] else 0)
 
     modularity = sumResult/(2*m)
@@ -39,13 +33,11 @@ def computeModularityGraph(graph):
     :param graph: a graph representation of a network, weighted or unweighted
     :returns: the modularity of the network as double
     """
-    m = 0
-
-    for edge in graph.getEdges():
-        m += edge.getWeight()
+    m = graph.getTotalEdgeWeight()
 
     # Graph representations do not have repreated edges, so divide by 1
-    m /= 1
+    # The traditional way of doing this node-wise rather than edgewise would double count each edge
+    # m /= 1
 
 
     sumResult = 0
@@ -53,26 +45,37 @@ def computeModularityGraph(graph):
         kNode = node.getSumEdgeWeights()
         print(kNode)
         for edge in node.getConnections():
-            node2 = None
-            for edgeNode in edge.getNodes():
-                #gets the node that is NOT the current node
-                if node != edgeNode:
-                    node2 = edgeNode
+            node2 = edge.getOtherNode(node)
             kNeighbor = node2.getSumEdgeWeights()
-            # print(str(kNeighbor) + ' ' + str(node2.getID()))
-            # print(edge.getWeight())
-            # print(kNode)
-            # print(kNeighbor)
-            print(m)
             interimResult = (edge.getWeight() - (kNode * kNeighbor) / (2*m))
             delta = 0
-            for c in graph.getCommunities():
-                if node in c.getMemberNodes() and node2 in c.getMemberNodes():
-                    delta = 1
+            if node.getCommunity() == node2.getCommunity():
+                delta = 1
             interimResult *= delta
-            # print(interimResult)
             sumResult += interimResult
 
     modularity = sumResult/(2*m)
 
     return modularity
+
+def computeDeltaModularity(node, community, m):
+    """ Attempts to move a node in to a given community, and calculates the change in modularity due to this move
+    :param node: node i to be moved
+    :param community: community for the node to be moved in to
+    :param m: sum of all weights in the graph
+    :return: double change in modularity value
+    """
+
+    sumIn = community.computeInCommunityWeight()
+    sumTot = 0
+    for commNode in community.getMemberNodes():
+        sumTot += commNode.getSumEdgeWeights()
+    kNode = node.getSumEdgeWeights()
+    kNodeComm = 0
+    for edge in node.getConnections():
+        otherNode = edge.getOtherNode(node)
+        if otherNode in community.getMemberNodes():
+            kNodeComm += edge.getWeight()
+
+    deltaModularity = ((sumIn + kNodeComm) / (2*m) - ((sumTot + kNode) / (2 * m)**2)) - (sumIn/(2*m) - (sumTot/2*m)**2 - (kNode/2*m)**2)
+    return deltaModularity
