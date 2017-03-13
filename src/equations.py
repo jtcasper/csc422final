@@ -18,7 +18,6 @@ def computeModularityDict(network):
     for node, values in network.items():
         neighbors = values[0]
         kNode = sum(neighbors.values())
-        print(kNode)
         for neighbor, weight in neighbors.items():
             neighborNodes = network[neighbor][0]
             kNeighbor = sum(neighborNodes.values())
@@ -43,7 +42,6 @@ def computeModularityGraph(graph):
     sumResult = 0
     for node in graph.getNodes():
         kNode = node.getSumEdgeWeights()
-        print(kNode)
         for edge in node.getConnections():
             node2 = edge.getOtherNode(node)
             kNeighbor = node2.getSumEdgeWeights()
