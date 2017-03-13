@@ -77,5 +77,5 @@ def computeDeltaModularity(node, community, m):
         if otherNode in community.getMemberNodes():
             kNodeComm += edge.getWeight()
 
-    deltaModularity = ((sumIn + kNodeComm) / (2*m) - ((sumTot + kNode) / (2 * m)**2)) - (sumIn/(2*m) - (sumTot/2*m)**2 - (kNode/2*m)**2)
+    deltaModularity = ((sumIn + kNodeComm)/(2 * m) - ((sumTot + kNode)/(2 * m))**2) - (sumIn / (2 * m) - (sumTot / (2 * m))**2 - (kNode / (2 * m))**2 )
     return deltaModularity

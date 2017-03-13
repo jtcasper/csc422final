@@ -20,7 +20,7 @@ if  __name__ == '__main__':
     graph1 = makeGraphFromDict('network1', network1)
     print('---------------------------------------')
     print(computeModularityGraph(graph1))
-    computeDeltaModularity(graph1.getNodes()[0], graph1.getCommunities()[0], graph1.getTotalEdgeWeight())
+    print(computeDeltaModularity(graph1.getNodes()[0], graph1.getCommunities()[0], graph1.getTotalEdgeWeight()))
     # print(graph1.getName())
     # for node in graph1.getNodes():
     #     print("node:{} address:{}".format(node.getID(), node))
