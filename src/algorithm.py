@@ -20,6 +20,7 @@ def phaseOne(graph):
                 currModIncrease = computeDeltaModularity(node, ncomm, m)
                 if (currModIncrease > bestModIncrease and currModIncrease > 0):
                     bestCommunity = ncomm
+                    bestModIncrease = currModIncrease
             if(bestCommunity != currCommunity):
                 print('Moving node {} to community {}'.format(node.getID(), bestCommunity.getID()))
                 currCommunity.removeMemberNode(node)
