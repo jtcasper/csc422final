@@ -8,7 +8,7 @@ class Node:
         """
 
         self.ID = ID
-        self.community = 0
+        self.community = None
         if connections is None:
             self.connections = []
 
