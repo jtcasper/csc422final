@@ -11,7 +11,7 @@ def phaseOne(graph):
     modularityIncrease = True
 
     while modularityIncrease:
-        for node in nodes:
+        for nodeID, node in nodes.items():
             ncomms = node.getNeighborCommunities()
             bestModIncrease = float('-inf')
             currCommunity = node.getCommunity()

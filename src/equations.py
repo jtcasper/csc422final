@@ -40,7 +40,7 @@ def computeModularityGraph(graph):
 
 
     sumResult = 0
-    for node in graph.getNodes():
+    for nodeID, node in graph.getNodes().items():
         kNode = node.getSumEdgeWeights()
         for edge in node.getConnections():
             node2 = edge.getOtherNode(node)

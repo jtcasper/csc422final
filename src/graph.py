@@ -17,11 +17,11 @@ class Graph:
         """
         self.name = name
         if nodes is None:
-            self.nodes = []
+            self.nodes = {}
         else:
             self.nodes = nodes
         if edges is None:
-            self.edges = []
+            self.edges = set()
         else:
             self.edges = edges
         if communities is None:
@@ -74,16 +74,18 @@ class Graph:
 
 def makeGraphFromDict(name, dict):
 
-    nodes = []
+    nodes = {}
     communities = []
     edges = set()
 
+    i = 0
     for nodeID, nodeValues in dict.items():
-        node = Node(nodeID)
+        node = Node(i)
         c = Community(nodeValues[1])
         c.addMemberNode(node)
-        nodes.append(node)
+        nodes[nodeID] = node
         communities.append(c)
+        i += 1
     for nodeID, nodeValues in dict.items():
         node = nodes[nodeID]
         for neighborID, arcWeight in nodeValues[0].items():
