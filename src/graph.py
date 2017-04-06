@@ -18,10 +18,16 @@ class Graph:
         self.name = name
         if nodes is None:
             self.nodes = []
+        else:
+            self.nodes = nodes
         if edges is None:
             self.edges = []
+        else:
+            self.edges = edges
         if communities is None:
             self.communities = []
+        else:
+            self.communities = communities
 
     def getName(self):
         return self.name
@@ -29,11 +35,17 @@ class Graph:
     def getNodes(self):
         return self.nodes
 
+    def setNodes(self, nodes):
+        self.nodes = nodes
+
     def addNode(self, newNode):
         self.nodes.append(newNode)
 
     def getEdges(self):
         return self.edges
+
+    def setEdges(self, edges):
+        self.edges = edges
 
     def getTotalEdgeWeight(self):
         """
@@ -54,52 +66,35 @@ class Graph:
     def addCommunity(self, newCommunity):
         self.communities.append(newCommunity)
 
+    def setCommunities(self, communities):
+        self.communities = communities
+
     def getSize(self):
         return
 
-
 def makeGraphFromDict(name, dict):
-    """
-    Updates this graph to be equal to a dictionary representation of a graph.
-    Essentially a secondary constructor using a dict
-    :param dict: Dictionary representation of a graph
-    :return: Graph object that is equivalent to dict
-    """
 
-    graph = Graph(name)
-    communities = []
     nodes = []
+    communities = []
+    edges = set()
 
     for nodeID, nodeValues in dict.items():
+        node = Node(nodeID)
         c = Community(nodeValues[1])
-        n = Node(nodeID)
-        if n not in nodes:
-            nodes.append(n)
-        for node in nodes:
-            if node == n:
-                n = node
+        c.addMemberNode(node)
+        nodes.append(node)
+        communities.append(c)
+    for nodeID, nodeValues in dict.items():
+        node = nodes[nodeID]
         for neighborID, arcWeight in nodeValues[0].items():
-            n2 = Node(neighborID)
-            if n2 not in nodes:
-                nodes.append(n2)
-            for node in nodes:
-                if node == n2:
-                    n2 = node
-            e = Edge(n, n2, arcWeight)
-            if e not in graph.getEdges():
-                graph.addEdge(e)
-                n.addConnection(e)
-                n2.addConnection(e)
-        if c not in communities:
-            communities.append(c)
-        for comm in communities:
-            if c == comm:
-                c = comm
-                c.addMemberNode(n)
+            node2 = nodes[neighborID]
+            e = Edge(node, node2, arcWeight)
+            e2 = Edge(node2, node, arcWeight)
+            if e not in edges and e2 not in edges:
+                edges.add(e)
+                node.addConnection(e)
+                node2.addConnection(e)
 
-    for node in nodes:
-        graph.addNode(node)
-    for c in communities:
-        graph.addCommunity(c)
+    graph = Graph(name, nodes=nodes, edges=edges, communities=communities)
 
     return graph
