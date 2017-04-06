@@ -11,6 +11,7 @@ class Node:
         self.community = None
         if connections is None:
             self.connections = []
+        self.totalEdgeWeights = 0
 
     def getID(self):
          return self.ID
@@ -48,17 +49,20 @@ class Node:
 
         return list
 
-    def getSumEdgeWeights(self):
+    def computeSumEdgeWeights(self):
         """
         Computes the weight of all edges this node is a part of
-        :return: The weight of all edges this node is a part of
         """
-        sum = 0
 
         for edge in self.connections:
-            sum += edge.getWeight()
+            self.totalEdgeWeights += edge.getWeight()
 
-        return sum
+    def getSumEdgeWeights(self):
+        """
+        :return: The weight of all edges this node is a part of
+        """
+
+        return self.totalEdgeWeights
 
     # def __str__(self):
     #     return str(self.getID())

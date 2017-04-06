@@ -96,6 +96,8 @@ def makeGraphFromDict(name, dict):
                 edges.add(e)
                 node.addConnection(e)
                 node2.addConnection(e)
+    for nodeID, node in nodes.items():
+        node.computeSumEdgeWeights()
 
     graph = Graph(name, nodes=nodes, edges=edges, communities=communities)
 

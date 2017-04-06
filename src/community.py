@@ -11,6 +11,7 @@ class Community:
         """
 
         self.ID = communityID
+        self.inCommunityWeight = 0
         if memberNodes is None:
             self.memberNodes = []
 
@@ -22,9 +23,11 @@ class Community:
 
     def addMemberNode(self, newNode):
         newNode.setCommunity(self)
+        self.inCommunityWeight = self.computeInCommunityWeight()
         self.memberNodes.append(newNode)
 
     def removeMemberNode(self, removeNode):
+        self.inCommunityWeight = self.computeInCommunityWeight()
         self.memberNodes.remove(removeNode)
 
 
@@ -50,6 +53,10 @@ class Community:
                     weightSum += edge.getWeight()
 
         return weightSum/2
+
+    def getInCommunityWeight(self):
+
+        return self.inCommunityWeight
 
     def __str__(self):
         return str(self.getID())

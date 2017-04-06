@@ -64,7 +64,7 @@ def computeDeltaModularity(node, community, m):
     :return: double change in modularity value
     """
 
-    sumIn = community.computeInCommunityWeight()
+    sumIn = community.getInCommunityWeight()
     sumTot = 0
     for commNode in community.getMemberNodes():
         sumTot += commNode.getSumEdgeWeights()
