@@ -22,7 +22,7 @@ def phaseOne(graph):
                     bestCommunity = ncomm
                     bestModIncrease = currModIncrease
             if(bestCommunity != currCommunity):
-                print('Moving node {} to community {}'.format(node.getID(), bestCommunity.getID()))
+                #print('Moving node {} to community {}'.format(node.getID(), bestCommunity.getID()))
                 currCommunity.removeMemberNode(node)
                 bestCommunity.addMemberNode(node)
         new_mod = computeModularityGraph(graph)

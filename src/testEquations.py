@@ -1,6 +1,7 @@
 from equations import *
 from graph import *
 from algorithm import *
+from visualization import *
 
 network1 = {1:[{2:1, 3:1, 4:1}, 1],
            2:[{1:1, 5:1}, 1],
@@ -32,21 +33,26 @@ for i in range(1, 151):
         network23[i] = [{i-4:1, i-3:1, i-2:1, i-1:1}, i]
 
 if  __name__ == '__main__':
-    print(computeModularityDict(network1))
+
     graph1 = makeGraphFromDict('network1', network1)
-    graph23 = makeGraphFromDict('network23', network23)
-    print('---------------------------------------')
-    print(computeModularityGraph(graph1))
-    print(computeDeltaModularity(graph1.getNodes()[0], graph1.getCommunities()[0], graph1.getTotalEdgeWeight()))
-    print('---------------------------------------')
-    print(computeModularityGraph(graph23))
-    p1graph23 = phaseOne(graph23)
-    graph23 = makeGraphFromDict('network23', network23)
-    graph23.getNodes().sort()
-    nodes = p1graph23.getNodes()
-    for comm in p1graph23.getCommunities():
-        if(len(comm.getMemberNodes()) > 0 and len(comm.getMemberNodes()) != 5):
-            print(comm.getID())
+    p1graph1 = phaseOne(graph1)
+    createVis(p1graph1)
+
+    # print(computeModularityDict(network1))
+    # graph1 = makeGraphFromDict('network1', network1)
+    # graph23 = makeGraphFromDict('network23', network23)
+    # print('---------------------------------------')
+    # print(computeModularityGraph(graph1))
+    # #print(computeDeltaModularity(graph1.getNodes()[0], graph1.getCommunities()[0], graph1.getTotalEdgeWeight()))
+    # print('---------------------------------------')
+    # print(computeModularityGraph(graph23))
+    # p1graph23 = phaseOne(graph23)
+    # graph23 = makeGraphFromDict('network23', network23)
+    # #graph23.getNodes().sort()
+    # nodes = p1graph23.getNodes()
+    # for comm in p1graph23.getCommunities():
+    #     if(len(comm.getMemberNodes()) > 0 and len(comm.getMemberNodes()) != 5):
+    #         print(comm.getID())
     # for i in range(0, 150):
     #     print("{} {} {}".format(i + 1, nodes[i] == nodesSorted[i], nodes[i].getCommunity() == nodesSorted[i].getCommunity()))
     #     if(len(nodes[i].getCommunity().getMemberNodes()) != 5):

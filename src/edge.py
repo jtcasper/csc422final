@@ -1,3 +1,5 @@
+from node import *
+
 class Edge:
     """
     An arc between nodes. The origin node will keep a track of neighbor arcs, so bidirectional arcs will have
@@ -22,6 +24,9 @@ class Edge:
 
     def getNodes(self):
         return (self.getNode1(), self.getNode2())
+
+    def getNodeIds(self):
+        return (self.getNode1().getID(), self.getNode2().getID())
 
     def getOtherNode(self, node):
         """
