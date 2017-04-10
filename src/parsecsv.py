@@ -21,8 +21,10 @@ def csvToDict(filename):
                 network[fromNode].append(fromNode)
             else:
                 network[fromNode][0][toNode] = 1
+
         #pp = pprint.PrettyPrinter(indent=1)
         #pp.pprint(network)
+        return network
 
 #if __name__ == '__main__':
     #csvToDict('../data/ucidata-zachary/out.ucidata-zachary')
