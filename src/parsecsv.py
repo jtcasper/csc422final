@@ -24,5 +24,5 @@ def csvToDict(filename):
         #pp = pprint.PrettyPrinter(indent=1)
         #pp.pprint(network)
 
-if __name__ == '__main__':
-    csvToDict('../data/ucidata-zachary/out.ucidata-zachary')
+#if __name__ == '__main__':
+    #csvToDict('../data/ucidata-zachary/out.ucidata-zachary')
