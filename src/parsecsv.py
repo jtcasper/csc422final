@@ -10,8 +10,21 @@ def csvToDict(filename):
         network = {}
         for row in reader:
             row = row[0].split(' ')
-            fromNode = row[0]
-            toNode = row[1]
+            # one set of edges (2 -> 3)
+            fromNode = int(row[0])
+            toNode = int(row[1])
+            if fromNode not in nodes:
+                nodes.append(fromNode)
+                network[fromNode] = []
+                innerDict = {}
+                innerDict[toNode] = 1
+                network[fromNode].append(innerDict)
+                network[fromNode].append(fromNode)
+            else:
+                network[fromNode][0][toNode] = 1
+            # edges the other way (3 -> 2)
+            fromNode = int(row[1])
+            toNode = int(row[0])
             if fromNode not in nodes:
                 nodes.append(fromNode)
                 network[fromNode] = []
@@ -22,8 +35,8 @@ def csvToDict(filename):
             else:
                 network[fromNode][0][toNode] = 1
 
-        #pp = pprint.PrettyPrinter(indent=1)
-        #pp.pprint(network)
+        pp = pprint.PrettyPrinter(indent=1)
+        pp.pprint(network)
         return network
 
 #if __name__ == '__main__':

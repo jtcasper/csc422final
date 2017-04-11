@@ -25,7 +25,7 @@ class Edge:
     def getNodes(self):
         return (self.getNode1(), self.getNode2())
 
-    def getNodeIds(self):
+    def getNodeIDs(self):
         return (self.getNode1().getID(), self.getNode2().getID())
 
     def getOtherNode(self, node):

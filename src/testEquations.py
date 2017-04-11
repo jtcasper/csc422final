@@ -2,6 +2,7 @@ from equations import *
 from graph import *
 from algorithm import *
 from visualization import *
+from parsecsv import *
 
 network1 = {1:[{2:1, 3:1, 4:1}, 1],
            2:[{1:1, 5:1}, 1],
@@ -36,7 +37,12 @@ if  __name__ == '__main__':
 
     graph23 = makeGraphFromDict('network23', network23)
     p1graph23 = phaseOne(graph23)
-    createVis(p1graph23)
+    createVis(p1graph23, 'network23')
+
+    zachDict = csvToDict('../data/ucidata-zachary/out.ucidata-zachary')
+    zachGraph = makeGraphFromDict('zachary', zachDict)
+    p1ZachGraph = phaseOne(zachGraph)
+    createVis(p1ZachGraph, 'zachary')
 
     # graph1 = makeGraphFromDict('network1', network1)
     # p1graph1 = phaseOne(graph1)

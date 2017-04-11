@@ -5,7 +5,7 @@ from plotly.graph_objs import*
 from plotly.offline import plot
 import math
 
-def createVis(graph):
+def createVis(graph, name):
     G = nx.Graph()
     nodes = graph.getNodes()
     ids = [] # nodes
@@ -15,7 +15,7 @@ def createVis(graph):
     G.add_nodes_from(ids)
     edges = graph.getEdges()
     for e in edges:
-        es.append(e.getNodeIds())
+        es.append(e.getNodeIDs())
     G.add_edges_from(es)
 
     # create positions for nodoes
@@ -42,9 +42,9 @@ def createVis(graph):
             G.node[nodes[i].getID()]['pos'] = point
             G.node[nodes[i].getID()]['com'] = c.getID()
 
-    createPlotly(G)
+    createPlotly(G, name)
 
-def createPlotly(G):
+def createPlotly(G, name):
     edge_trace = Scatter(
         x = [],
         y = [],
@@ -104,4 +104,4 @@ def createPlotly(G):
                 xaxis=XAxis(showgrid=False, zeroline=False, showticklabels=False),
                 yaxis=YAxis(showgrid=False, zeroline=False, showticklabels=False)))
 
-    plot(fig, filename='clusters')
+    plot(fig, filename=name)
