@@ -89,11 +89,6 @@ def createPlotly(G):
         node_info = 'Community ID: ' + str(G.node[node]['com'])
         node_trace['text'].append(node_info)
 
-    # for node, adjacencies in enumerate(G.adjacency_list()):
-    #     node_trace['marker']['color'].append(len(adjacencies))
-    #     node_info = '# of connections: '+ str(len(adjacencies))
-    #     node_trace['text'].append(node_info)
-
     fig = Figure(data=Data([edge_trace, node_trace]),
              layout=Layout(
                 title='Graph of Clusters',
