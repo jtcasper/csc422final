@@ -35,8 +35,8 @@ def csvToDict(filename):
             else:
                 network[fromNode][0][toNode] = 1
 
-        pp = pprint.PrettyPrinter(indent=1)
-        pp.pprint(network)
+        #pp = pprint.PrettyPrinter(indent=1)
+        #pp.pprint(network)
         return network
 
 #if __name__ == '__main__':

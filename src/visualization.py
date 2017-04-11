@@ -22,7 +22,7 @@ def createVis(graph, name):
     numCommunities = len(graph.getCommunities())
     communities = graph.getCommunities()
     plotCenters = []
-    r = 1 # radius of circle
+    r = 2 # radius of circle
     for i in range(numCommunities):
         x = r * math.cos(2 * math.pi * i / numCommunities)
         y = r * math.sin(2 * math.pi * i / numCommunities)
@@ -31,14 +31,19 @@ def createVis(graph, name):
     for i in range(numCommunities):
         center = plotCenters[i]
         c = communities[i]
-        r = 0.3 # radius of the circle
+        r = 1 # radius of the circle
         nodes = c.getMemberNodes()
-        for i in range(c.getCommunitySize()):
-            x = center[0] + r * math.cos(2 * math.pi * i / c.getCommunitySize())
-            y = center[1] + r * math.sin(2 * math.pi * i / c.getCommunitySize())
+        numNodes = c.getCommunitySize()
+        for i in range(numNodes):
             point = []
-            point.append(x)
-            point.append(y)
+            if c.getID() == nodes[i].getID():
+                point.append(center[0])
+                point.append(center[1])
+            else:
+                x = center[0] + r * math.cos(2 * math.pi * i / numNodes-1)
+                y = center[1] + r * math.sin(2 * math.pi * i / numNodes-1)
+                point.append(x)
+                point.append(y)
             G.node[nodes[i].getID()]['pos'] = point
             G.node[nodes[i].getID()]['com'] = c.getID()
 
@@ -86,7 +91,7 @@ def createPlotly(G, name):
     # color nodes based on community id
     for node in G.nodes():
         node_trace['marker']['color'].append(G.node[node]['com'])
-        node_info = 'Community ID: ' + str(G.node[node]['com'])
+        node_info = 'Community ID: ' + str(G.node[node]['com']) + ' Node ID: ' + str(node)
         node_trace['text'].append(node_info)
 
     fig = Figure(data=Data([edge_trace, node_trace]),
