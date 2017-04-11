@@ -34,9 +34,13 @@ for i in range(1, 151):
 
 if  __name__ == '__main__':
 
-    graph1 = makeGraphFromDict('network1', network1)
-    p1graph1 = phaseOne(graph1)
-    createVis(p1graph1)
+    graph23 = makeGraphFromDict('network23', network23)
+    p1graph23 = phaseOne(graph23)
+    createVis(p1graph23)
+
+    # graph1 = makeGraphFromDict('network1', network1)
+    # p1graph1 = phaseOne(graph1)
+    # createVis(p1graph1)
 
     # print(computeModularityDict(network1))
     # graph1 = makeGraphFromDict('network1', network1)
