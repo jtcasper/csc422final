@@ -28,7 +28,7 @@ def createVis(graph):
         y = r * math.sin(2 * math.pi * i / numCommunities)
         plotCenters.append((x, y))
 
-    for i in range(len(communities)):
+    for i in range(numCommunities):
         center = plotCenters[i]
         c = communities[i]
         r = 0.3 # radius of the circle
