@@ -19,33 +19,45 @@ def createVis(graph, name):
     G.add_edges_from(es)
 
     # create positions for nodoes
-    numCommunities = len(graph.getCommunities())
-    communities = graph.getCommunities()
+    communities = []
+    communityIDs = []
+    for c in graph.getCommunities(): # get unique communities
+        if c.getID() not in communityIDs:
+            communities.append(c)
+            communityIDs.append(c.getID())
+    numCommunities = len(communities)
     plotCenters = []
-    r = 2 # radius of circle
+    r = 1 # radius of circle
     for i in range(numCommunities):
         x = r * math.cos(2 * math.pi * i / numCommunities)
         y = r * math.sin(2 * math.pi * i / numCommunities)
         plotCenters.append((x, y))
 
+    # for c in graph.getCommunities():
+    #     print('Community ID: ' + str(c.getID()))
+    #     print('Member node IDs: ')
+    #     for n in c.getMemberNodes():
+    #         print(n.getID())
+    #     print('---')
+
     for i in range(numCommunities):
         center = plotCenters[i]
         c = communities[i]
-        r = 1 # radius of the circle
+        r = 0.1 # radius of community
         nodes = c.getMemberNodes()
         numNodes = c.getCommunitySize()
-        for i in range(numNodes):
+        for j in range(numNodes):
             point = []
-            if c.getID() == nodes[i].getID():
+            if nodes[j].getID() == c.getID():
                 point.append(center[0])
                 point.append(center[1])
             else:
-                x = center[0] + r * math.cos(2 * math.pi * i / numNodes-1)
-                y = center[1] + r * math.sin(2 * math.pi * i / numNodes-1)
+                x = center[0] + r * math.cos(2 * math.pi * j / numNodes-1)
+                y = center[1] + r * math.sin(2 * math.pi * j / numNodes-1)
                 point.append(x)
                 point.append(y)
-            G.node[nodes[i].getID()]['pos'] = point
-            G.node[nodes[i].getID()]['com'] = c.getID()
+            G.node[nodes[j].getID()]['pos'] = point
+            G.node[nodes[j].getID()]['com'] = c.getID()
 
     createPlotly(G, name)
 
@@ -91,7 +103,8 @@ def createPlotly(G, name):
     # color nodes based on community id
     for node in G.nodes():
         node_trace['marker']['color'].append(G.node[node]['com'])
-        node_info = 'Community ID: ' + str(G.node[node]['com']) + ' Node ID: ' + str(node)
+        node_info = 'Community ID: ' + str(G.node[node]['com']) + ' Node ID: ' + str(node) + ' Coords: ' + str(G.node[node]['pos'])
+        #print(node_info)
         node_trace['text'].append(node_info)
 
     fig = Figure(data=Data([edge_trace, node_trace]),
