@@ -5,14 +5,24 @@ def csvToDict(filename):
     with open(filename, 'r') as file:
         reader = csv.reader(file)
         next(reader)
-        next(reader)
+        if filename == '../data/ucidata-zachary/out.ucidata-zachary':
+            next(reader)
         nodes = []
         network = {}
+        count = 0
         for row in reader:
-            row = row[0].split(' ')
             # one set of edges (2 -> 3)
-            fromNode = int(row[0])
-            toNode = int(row[1])
+            if filename == '../data/ucidata-zachary/out.ucidata-zachary':
+                row = row[0].split(' ')
+                fromNode = int(row[0])
+                toNode = int(row[1])
+            else:
+                # only run for n rows
+                count += 1
+                if count == 10000:
+                    break
+                fromNode = row[0]
+                toNode = row[1]
             if fromNode not in nodes:
                 nodes.append(fromNode)
                 network[fromNode] = []
@@ -23,8 +33,12 @@ def csvToDict(filename):
             else:
                 network[fromNode][0][toNode] = 1
             # edges the other way (3 -> 2)
-            fromNode = int(row[1])
-            toNode = int(row[0])
+            if filename == '../data/ucidata-zachary/out.ucidata-zachary':
+                fromNode = int(row[1])
+                toNode = int(row[0])
+            else:
+                fromNode = row[1]
+                toNode = row[0]
             if fromNode not in nodes:
                 nodes.append(fromNode)
                 network[fromNode] = []
@@ -37,7 +51,10 @@ def csvToDict(filename):
 
         #pp = pprint.PrettyPrinter(indent=1)
         #pp.pprint(network)
+        #if filename != '../data/ucidata-zachary/out.ucidata-zachary':
+        #    print(network['AVALANCHE/DOMINIC PE'])
         return network
 
 #if __name__ == '__main__':
     #csvToDict('../data/ucidata-zachary/out.ucidata-zachary')
+    #csvToDict('../data/hero-network/hero-network.csv')

@@ -35,18 +35,23 @@ for i in range(1, 151):
 
 if  __name__ == '__main__':
 
-    graph23 = makeGraphFromDict('network23', network23)
-    p1graph23 = phaseOne(graph23)
-    createVis(p1graph23, 'network23')
-
-    # graph2 = makeGraphFromDict('network2', network2)
-    # p1graph2 = phaseOne(graph2)
-    # createVis(p1graph2, 'network2')
+    # graph23 = makeGraphFromDict('network23', network23)
+    # p1graph23 = phaseOne(graph23)
+    # createVis(p1graph23, 'network23')
 
     # zachDict = csvToDict('../data/ucidata-zachary/out.ucidata-zachary')
     # zachGraph = makeGraphFromDict('zachary', zachDict)
     # p1ZachGraph = phaseOne(zachGraph)
     # createVis(p1ZachGraph, 'zachary')
+
+    marvelDict = csvToDict('../data/hero-network/hero-network.csv')
+    marvelGraph = makeGraphFromDict('marvel', marvelDict)
+    p1MarvelGraph = phaseOne(marvelGraph)
+    createVis(p1MarvelGraph, 'marvel')
+
+    # graph2 = makeGraphFromDict('network2', network2)
+    # p1graph2 = phaseOne(graph2)
+    # createVis(p1graph2, 'network2')
 
     # graph1 = makeGraphFromDict('network1', network1)
     # p1graph1 = phaseOne(graph1)

@@ -56,12 +56,13 @@ def createVis(graph, name):
                 y = center[1] + r * math.sin(2 * math.pi * j / numNodes-1)
                 point.append(x)
                 point.append(y)
+            G.node[nodes[j].getID()]['id'] = nodes[j].getID()
             G.node[nodes[j].getID()]['pos'] = point
             G.node[nodes[j].getID()]['com'] = c.getID()
 
-    createPlotly(G, name)
+    createPlotly(G, name, communityIDs)
 
-def createPlotly(G, name):
+def createPlotly(G, name, communityIDs):
     edge_trace = Scatter(
         x = [],
         y = [],
@@ -102,8 +103,8 @@ def createPlotly(G, name):
 
     # color nodes based on community id
     for node in G.nodes():
-        node_trace['marker']['color'].append(G.node[node]['com'])
-        node_info = 'Community ID: ' + str(G.node[node]['com']) + ' Node ID: ' + str(node) + ' Coords: ' + str(G.node[node]['pos'])
+        node_trace['marker']['color'].append(communityIDs.index(G.node[node]['com']))
+        node_info = 'Community ID: ' + str(G.node[node]['com']) + ' Node ID: ' + str(G.node[node]['id'])
         #print(node_info)
         node_trace['text'].append(node_info)
 
