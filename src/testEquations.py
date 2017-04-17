@@ -35,26 +35,38 @@ for i in range(1, 151):
 
 if  __name__ == '__main__':
 
-    # graph23 = makeGraphFromDict('network23', network23)
-    # p1graph23 = phaseOne(graph23)
+    graph23 = makeGraphFromDict('network23', network23)
+    # createVis(graph23, 'network231')
+    p1graph23 = phaseOne(graph23)
     # createVis(p1graph23, 'network23')
+    p2graph23 = phaseTwo(p1graph23)
+    createVis(p2graph23, 'network232')
+    p1graph232 = phaseOne(p2graph23)
+    createVis(p1graph232, 'network233')
 
     # zachDict = csvToDict('../data/ucidata-zachary/out.ucidata-zachary')
     # zachGraph = makeGraphFromDict('zachary', zachDict)
     # p1ZachGraph = phaseOne(zachGraph)
+    # p2ZachGraph = phaseTwo(p1ZachGraph)
+    # p3ZachGraph = phaseOne(p2ZachGraph)
     # createVis(p1ZachGraph, 'zachary')
+    # createVis(p2ZachGraph, 'zachary2')
+    # createVis(p3ZachGraph, 'zachary3')
 
-    marvelDict = csvToDict('../data/hero-network/hero-network.csv')
-    marvelGraph = makeGraphFromDict('marvel', marvelDict)
-    p1MarvelGraph = phaseOne(marvelGraph)
-    createVis(p1MarvelGraph, 'marvel')
+    # marvelDict = csvToDict('../data/hero-network/hero-network.csv')
+    # marvelGraph = makeGraphFromDict('marvel', marvelDict)
+    # p1MarvelGraph = phaseOne(marvelGraph)
+    # createVis(p1MarvelGraph, 'marvel')
 
     # graph2 = makeGraphFromDict('network2', network2)
     # p1graph2 = phaseOne(graph2)
-    # createVis(p1graph2, 'network2')
+    # p2graph2 = phaseTwo(p1graph2)
+    # createVis(p1graph2, '../html/network2')
+    # createVis(p2graph2, '../html/network22')
 
     # graph1 = makeGraphFromDict('network1', network1)
     # p1graph1 = phaseOne(graph1)
+    # p2pgraph1 = phaseTwo(p1graph1)
     # createVis(p1graph1, 'network1')
 
     # print(computeModularityDict(network1))

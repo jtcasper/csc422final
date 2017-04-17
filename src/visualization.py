@@ -104,7 +104,7 @@ def createPlotly(G, name, communityIDs):
     # color nodes based on community id
     for node in G.nodes():
         node_trace['marker']['color'].append(communityIDs.index(G.node[node]['com']))
-        node_info = 'Community ID: ' + str(G.node[node]['com']) + ' Node ID: ' + str(communityIDs[G.node[node]['id']])
+        node_info = 'Community ID: ' + str(G.node[node]['com']) + ' Node ID: ' + str(G.node[node]['id'])
         #print(node_info)
         node_trace['text'].append(node_info)
 

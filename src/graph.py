@@ -78,14 +78,12 @@ def makeGraphFromDict(name, dict):
     communities = []
     edges = set()
 
-    i = 0
     for nodeID, nodeValues in dict.items():
-        node = Node(i)
+        node = Node(nodeID)
         c = Community(nodeValues[1])
         c.addMemberNode(node)
         nodes[nodeID] = node
         communities.append(c)
-        i += 1
     for nodeID, nodeValues in dict.items():
         node = nodes[nodeID]
         for neighborID, arcWeight in nodeValues[0].items():
