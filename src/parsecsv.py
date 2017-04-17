@@ -17,9 +17,9 @@ def csvToDict(filename):
                 fromNode = int(row[0])
                 toNode = int(row[1])
             else:
-                # only run for n rows
+                # only run for count rows
                 count += 1
-                if count == 10000:
+                if count == 50000:
                     break
                 fromNode = row[0]
                 toNode = row[1]

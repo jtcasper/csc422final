@@ -1,5 +1,4 @@
 *.pyc
 *.idea
-data/
 data_ignore/
 *.html
