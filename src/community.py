@@ -23,12 +23,13 @@ class Community:
 
     def addMemberNode(self, newNode):
         newNode.setCommunity(self)
-        self.inCommunityWeight = self.computeInCommunityWeight()
         self.memberNodes.append(newNode)
+        self.computeInCommunityWeight()
 
     def removeMemberNode(self, removeNode):
-        self.inCommunityWeight = self.computeInCommunityWeight()
         self.memberNodes.remove(removeNode)
+        self.computeInCommunityWeight()
+
 
 
     def getCommunitySize(self):
@@ -41,7 +42,6 @@ class Community:
     def computeInCommunityWeight(self):
         """
         Computes the weight of all edges between nodes in the community.
-        Since edges will be double counted per connection, divide by 2 at end.
         :return: The weight between nodes in the community.
         """
 
@@ -52,7 +52,7 @@ class Community:
                 if edge.getOtherNode(node).getCommunity() == node.getCommunity():
                     weightSum += edge.getWeight()
 
-        return weightSum/2
+        self.inCommunityWeight = weightSum
 
     def getInCommunityWeight(self):
 

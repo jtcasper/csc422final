@@ -95,6 +95,9 @@ def phaseTwo(graph):
     for nodeID, node in newNodes.items():
         node.computeSumEdgeWeights()
 
+    for community in newCommunities:
+        community.computeInCommunityWeight()
+
     p2graph = Graph(graph.getName(), nodes=newNodes, edges=newEdges, communities=newCommunities)
 
     return p2graph

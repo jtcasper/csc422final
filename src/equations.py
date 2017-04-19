@@ -44,6 +44,8 @@ def computeModularityGraph(graph):
         kNode = node.getSumEdgeWeights()
         for edge in node.getConnections():
             node2 = edge.getOtherNode(node)
+            if node2 == node:
+                continue
             kNeighbor = node2.getSumEdgeWeights()
             interimResult = (edge.getWeight() - (kNode * kNeighbor) / (2*m))
             delta = 0
