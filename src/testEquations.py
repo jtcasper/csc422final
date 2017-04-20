@@ -59,6 +59,11 @@ if  __name__ == '__main__':
     p5ZachGraph = phaseOne(p4ZachGraph)
     createVis(p5ZachGraph, 'zachary5')
 
+    graphs = [p1ZachGraph, p2ZachGraph, p3ZachGraph, p4ZachGraph, p5ZachGraph]
+
+    #graphs = []
+    plotClusterVsMembers(graphs)
+
 
     # marvelDict = csvToDict('../data/hero-network/hero-network.csv')
     # marvelGraph = makeGraphFromDict('marvel', marvelDict)
