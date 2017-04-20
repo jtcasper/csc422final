@@ -1,9 +1,11 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import plotly.plotly as py
-from plotly.graph_objs import*
+from plotly.graph_objs import *
 from plotly.offline import plot
+import numpy as np
 import math
+import random
 
 def createVis(graph, name):
     G = nx.Graph()
@@ -70,6 +72,14 @@ def createPlotly(G, name, communityIDs):
         hoverinfo = 'none',
         mode = 'lines')
 
+    # Generate colours for plotly
+    colorset = []
+    for i in range(len(communityIDs)):
+        color = []
+        color.append(i)
+        color.append('#' + ''.join(random.choice('0123456789ABCDEF') for x in range(6)))
+        colorset.append(color)
+
     for edge in G.edges():
         x0, y0 = G.node[edge[0]]['pos']
         x1, y1 = G.node[edge[1]]['pos']
@@ -84,16 +94,16 @@ def createPlotly(G, name, communityIDs):
         hoverinfo = 'text',
         marker = Marker(
             showscale = True,
-            colorscale='YIGnBu',
-            reversescale=True,
+            colorscale=colorset,
+            #reversescale=True,
             color=[],
             size=10,
-            colorbar=dict(
-                thickness=15,
-                title='Community Number',
-                xanchor='left',
-                titleside='right'
-            ),
+            # colorbar=dict(
+            #     thickness=15,
+            #     title='Community Number',
+            #     xanchor='left',
+            #     titleside='right'
+            # ),
             line = dict(width=2)))
 
     for node in G.nodes():
@@ -103,9 +113,8 @@ def createPlotly(G, name, communityIDs):
 
     # color nodes based on community id
     for node in G.nodes():
-        node_trace['marker']['color'].append(communityIDs.index(G.node[node]['com']))
+        node_trace['marker']['color'].append(colorset[communityIDs.index(G.node[node]['com'])])
         node_info = 'Community ID: ' + str(G.node[node]['com']) + ' Node ID: ' + str(G.node[node]['id'])
-        #print(node_info)
         node_trace['text'].append(node_info)
 
     fig = Figure(data=Data([edge_trace, node_trace]),
@@ -124,3 +133,22 @@ def createPlotly(G, name, communityIDs):
                 yaxis=YAxis(showgrid=False, zeroline=False, showticklabels=False)))
 
     plot(fig, filename=name)
+
+def plotClusterVsMembers(graphs):
+    # todo: plot community id vs number of members
+    data = []
+    for g in graphs:
+        x_list = []
+        y_list = []
+        communities = g.getCommunities()
+        communities.sort(key=lambda x: x.getID())
+        for c in communities:
+            x_list.append(c.getID())
+            y_list.append(c.getCommunitySize())
+        trace = Scatter(
+            x = np.asarray(x_list),
+            y = np.asarray(y_list)
+        )
+        data.append(trace)
+
+    plot(data, filename = 'clustervmembers')
