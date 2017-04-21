@@ -28,7 +28,7 @@ prevModularity = currentModularity
 
 print(currentModularity)
 print(prevModularity)
-
+print(networkGraph.getTotalEdgeWeight())
 outpath = '../html/' + name + '0'
 createVis(networkGraph, outpath)
 modularities = [currentModularity]
@@ -37,9 +37,10 @@ while True:
     networkGraph = phaseOne(networkGraph)
     currentModularity = computeModularityGraph(networkGraph)
     modularities.append(currentModularity)
-    print(currentModularity)
-    print(prevModularity)
-    print(i)
+    # print(currentModularity)
+    # print(prevModularity)
+    print(networkGraph.getTotalEdgeWeight())
+    # print(i)
     if currentModularity <= prevModularity:
         break
     outpath = '../html/' + name + str(i)
@@ -51,5 +52,6 @@ while True:
     i += 1
     prevModularity = currentModularity
 
+print(modularities)
 print(max(modularities))
 print('done')

@@ -44,10 +44,11 @@ def computeModularityGraph(graph):
         kNode = node.getSumEdgeWeights()
         for edge in node.getConnections():
             node2 = edge.getOtherNode(node)
+            edgeWeight = edge.getWeight()
             if node2 == node:
-                continue
+                edgeWeight *= 2
             kNeighbor = node2.getSumEdgeWeights()
-            interimResult = (edge.getWeight() - (kNode * kNeighbor) / (2*m))
+            interimResult = (edgeWeight - (kNode * kNeighbor) / (2*m))
             delta = 0
             if node.getCommunity() == node2.getCommunity():
                 delta = 1
@@ -69,7 +70,11 @@ def computeDeltaModularity(node, community, m):
     sumIn = community.getInCommunityWeight()
     sumTot = 0
     for commNode in community.getMemberNodes():
-        sumTot += commNode.getSumEdgeWeights()
+        for edge in commNode.getConnections():
+            edgeWeight = edge.getWeight()
+            if edge.getOtherNode(commNode).getCommunity() == community:
+                edgeWeight /= 2
+            sumTot += edgeWeight
     kNode = node.getSumEdgeWeights()
     kNodeComm = 0
     for edge in node.getConnections():

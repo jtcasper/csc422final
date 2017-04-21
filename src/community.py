@@ -50,7 +50,7 @@ class Community:
         for node in self.getMemberNodes():
             for edge in node.getConnections():
                 if edge.getOtherNode(node).getCommunity() == node.getCommunity():
-                    weightSum += edge.getWeight()
+                    weightSum += edge.getWeight() / 2
 
         self.inCommunityWeight = weightSum
 

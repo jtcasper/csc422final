@@ -20,12 +20,18 @@ def phaseOne(graph):
             currCommunity = node.getCommunity()
             bestCommunity = currCommunity
             for ncomm in ncomms:
+                print("Moving {} into {}".format(nodeID, ncomm.getID()))
+                currCommunity.removeMemberNode(node)
+                ncomm.addMemberNode(node)
                 currModIncrease = computeDeltaModularity(node, ncomm, m)
+                ncomm.removeMemberNode(node)
+                currCommunity.addMemberNode(node)
+                print(currModIncrease)
                 if (currModIncrease > bestModIncrease and currModIncrease > 0):
                     bestCommunity = ncomm
                     bestModIncrease = currModIncrease
             if(bestCommunity != currCommunity):
-                #print('Moving node {} to community {}'.format(node.getID(), bestCommunity.getID()))
+                print('Moving node {} to community {}'.format(node.getID(), bestCommunity.getID()))
                 currCommunity.removeMemberNode(node)
                 bestCommunity.addMemberNode(node)
         new_mod = computeModularityGraph(graph)
@@ -77,8 +83,11 @@ def phaseTwo(graph):
             neighborList = node.getNeighborCommunities()
             # This loop calculates the weight of each new edge
             for edge in node.getConnections():
-                nCommID = edge.getOtherNode(node).getCommunity().getID()
-                if nCommID == node.getCommunity().getID():
+                otherNode = edge.getOtherNode(node)
+                nCommID = otherNode.getCommunity().getID()
+                if node == otherNode:
+                    newEdgeDict[nCommID] = newEdgeDict.get(nCommID, 0) + edge.getWeight()
+                elif nCommID == node.getCommunity().getID():
                     newEdgeDict[nCommID] = newEdgeDict.get(nCommID, 0) + edge.getWeight()/2
                 else:
                     newEdgeDict[nCommID] = newEdgeDict.get(nCommID, 0) + edge.getWeight()
