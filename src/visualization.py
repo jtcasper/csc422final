@@ -113,7 +113,7 @@ def createPlotly(G, name, communityIDs):
 
     # color nodes based on community id
     for node in G.nodes():
-        node_trace['marker']['color'].append(colorset[communityIDs.index(G.node[node]['com'])])
+        node_trace['marker']['color'].append(communityIDs.index(G.node[node]['com']))
         node_info = 'Community ID: ' + str(G.node[node]['com']) + ' Node ID: ' + str(G.node[node]['id'])
         node_trace['text'].append(node_info)
 
@@ -134,21 +134,26 @@ def createPlotly(G, name, communityIDs):
 
     plot(fig, filename=name)
 
-def plotClusterVsMembers(graphs):
-    # todo: plot community id vs number of members
-    data = []
-    for g in graphs:
-        x_list = []
-        y_list = []
-        communities = g.getCommunities()
-        communities.sort(key=lambda x: x.getID())
-        for c in communities:
-            x_list.append(c.getID())
-            y_list.append(c.getCommunitySize())
-        trace = Scatter(
-            x = np.asarray(x_list),
-            y = np.asarray(y_list)
-        )
-        data.append(trace)
+def getTrace(graph, name):
+    x_list = []
+    y_list = []
+    communities = graph.getCommunities()
+    communities.sort(key=lambda x: x.getID())
+    for c in communities:
+        x_list.append(c.getID())
+        y_list.append(c.getCommunitySize())
 
-    plot(data, filename = 'clustervmembers')
+    trace = Scatter(
+        x = np.asarray(x_list),
+        y = np.asarray(y_list),
+        name = name
+        )
+    return trace
+
+def plotClusterVsMembers(traces):
+    layout = dict(title = 'Member count by community ID for each pass of modularity clustering',
+              xaxis = dict(title = 'Community ID'),
+              yaxis = dict(title = 'Number of members in community'),
+              )
+    fig = dict(data = traces, layout = layout)
+    plot(fig, filename = 'clustervmembers')

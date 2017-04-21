@@ -46,23 +46,33 @@ if  __name__ == '__main__':
     # p1graph232 = phaseOne(p2graph23)
     # createVis(p1graph232, 'network233')
 
+    # list of traces for cluster vs members graph
+    traces = []
+
     zachDict = csvToDict('../data/ucidata-zachary/out.ucidata-zachary')
     zachGraph = makeGraphFromDict('zachary', zachDict)
+
     p1ZachGraph = phaseOne(zachGraph)
+    traces.append(getTrace(p1ZachGraph, 'zachary'))
     createVis(p1ZachGraph, 'zachary')
+
     p2ZachGraph = phaseTwo(p1ZachGraph)
+    traces.append(getTrace(p2ZachGraph, 'zachary2'))
     createVis(p2ZachGraph, 'zachary2')
+
     p3ZachGraph = phaseOne(p2ZachGraph)
+    traces.append(getTrace(p3ZachGraph, 'zachary3'))
     createVis(p3ZachGraph, 'zachary3')
+
     p4ZachGraph = phaseTwo(p3ZachGraph)
+    traces.append(getTrace(p4ZachGraph, 'zachary4'))
     createVis(p4ZachGraph, 'zachary4')
+
     p5ZachGraph = phaseOne(p4ZachGraph)
+    traces.append(getTrace(p5ZachGraph, 'zachary5'))
     createVis(p5ZachGraph, 'zachary5')
 
-    graphs = [p1ZachGraph, p2ZachGraph, p3ZachGraph, p4ZachGraph, p5ZachGraph]
-
-    #graphs = []
-    plotClusterVsMembers(graphs)
+    plotClusterVsMembers(traces)
 
 
     # marvelDict = csvToDict('../data/hero-network/hero-network.csv')
