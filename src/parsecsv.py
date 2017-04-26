@@ -19,7 +19,7 @@ def csvToDict(filename):
             else:
                 # only run for count rows
                 count += 1
-                if count == 50000:
+                if count == 10000:
                     break
                 fromNode = row[0]
                 toNode = row[1]

@@ -26,17 +26,17 @@ def phaseOne(graph):
                 currModIncrease = computeDeltaModularity(node, ncomm, m)
                 ncomm.removeMemberNode(node)
                 currCommunity.addMemberNode(node)
-                print(currModIncrease)
+                #print(currModIncrease)
                 if (currModIncrease > bestModIncrease and currModIncrease > 0):
                     bestCommunity = ncomm
                     bestModIncrease = currModIncrease
             if(bestCommunity != currCommunity):
-                print('Moving node {} to community {}'.format(node.getID(), bestCommunity.getID()))
+                #print('Moving node {} to community {}'.format(node.getID(), bestCommunity.getID()))
                 currCommunity.removeMemberNode(node)
                 bestCommunity.addMemberNode(node)
         new_mod = computeModularityGraph(graph)
         if(new_mod > curr_mod):
-            print("Modularity Increased by: {}".format(new_mod - curr_mod))
+            #print("Modularity Increased by: {}".format(new_mod - curr_mod))
             curr_mod = new_mod
         else:
             modularityIncrease = False
@@ -110,4 +110,3 @@ def phaseTwo(graph):
     p2graph = Graph(graph.getName(), nodes=newNodes, edges=newEdges, communities=newCommunities)
 
     return p2graph
-
